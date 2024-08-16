@@ -39,7 +39,7 @@ ALLOWED_HOSTS = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'https://8000-shixen-ptapi-ewrsmddxgmb.ws.codeinstitute-ide.net',
+    'https://3000-shixen-ptnikke-j87jrjow51e.ws.codeinstitute-ide.net/',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
