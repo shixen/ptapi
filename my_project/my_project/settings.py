@@ -27,21 +27,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'DEV' in os.environ
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    'drf-api-momentss-a60d7a4aafd3.herokuapp.com',
-    'https://8000-shixen-ptapi-ewrsmddxgmb.ws.codeinstitute-ide.net/',
+    '127.0.0.1',
+    '8000-shixen-ptapi-ewrsmddxgmb.ws.codeinstitute-ide.net',
     'herokuapp.com'
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://8000-shixen-ptapi-ewrsmddxgmb.ws.codeinstitute-ide.net/",
+    'http://localhost:3000',
+    'https://8000-shixen-ptapi-ewrsmddxgmb.ws.codeinstitute-ide.net',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://8000-shixen-ptapi-ewrsmddxgmb.ws.codeinstitute-ide.net/",
+    "https://8000-shixen-ptapi-ewrsmddxgmb.ws.codeinstitute-ide.net",
 ]
 
 # Application definition
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'posts',
+    'workoutplan',
 ]
 
 MIDDLEWARE = [
@@ -94,15 +96,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'my_project.wsgi.application'
 
 # Database
-DATABASE_URL = os.environ.get("DATABASE_URL")
 
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL)
-    }
-else:
-    raise ValueError("DATABASE_URL environment variable is not set or is empty.")
-
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
