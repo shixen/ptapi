@@ -42,6 +42,8 @@ CORS_ALLOWED_ORIGINS = [
     'https://3000-shixen-ptnikke-j87jrjow51e.ws.codeinstitute-ide.net/',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 CSRF_TRUSTED_ORIGINS = [
     "https://8000-shixen-ptapi-ewrsmddxgmb.ws.codeinstitute-ide.net",
 ]
