@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Post, WorkoutPlan
+from .models import Post
 
-admin.site.register(Post)
-admin.site.register(WorkoutPlan)
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ['title', 'content', 'created_at']
