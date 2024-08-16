@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import posts, WorkoutPlan
+from .models import Post, WorkoutPlan
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
