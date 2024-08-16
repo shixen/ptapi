@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '8000-shixen-ptapi-ewrsmddxgmb.ws.codeinstitute-ide.net',
+    'my-pt-api-242fe05c6a61.herokuapp.com',
     'herokuapp.com'
 ]
 
