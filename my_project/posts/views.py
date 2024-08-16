@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import posts, WorkoutPlan
+from .models import Post, WorkoutPlan
 from .serializers import PostSerializer, WorkoutPlanSerializer
 
 
