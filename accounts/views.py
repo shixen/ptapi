@@ -33,5 +33,8 @@ class CustomLoginView(APIView):
 #REST token to handle logout
 class LogoutView(APIView):
     def post(self, request):
-        logout(request)
-        return Response({'detail': 'Logout successful'}, status=status.HTTP_200_OK)
+        if request.user.is_authenticated:
+            logout(request)
+            return Response({'status': 'User logged out'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'No user is logged in'}, status=status.HTTP_400_BAD_REQUEST)
