@@ -50,6 +50,10 @@ CORS_ALLOWED_ORIGINS = [
     'https://my-pt-api-242fe05c6a61.herokuapp.com',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 CORS_ALLOW_METHODS = [
     'GET',
     'POST',
