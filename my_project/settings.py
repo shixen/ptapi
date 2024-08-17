@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'posts',
     'workoutplan',
+    'accounts',
 ]
 
 MIDDLEWARE = [
