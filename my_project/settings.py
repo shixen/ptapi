@@ -33,9 +33,8 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '8000-shixen-ptapi-ewrsmddxgmb.ws.codeinstitute-ide.net',
-    'https://3000-shixen-ptnikke-j87jrjow51e.ws.codeinstitute-ide.net/,'
+    'https://3000-shixen-ptnikke-j87jrjow51e.ws.codeinstitute-ide.net',
     'my-pt-api-242fe05c6a61.herokuapp.com',
-    'herokuapp.com'
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -45,9 +44,10 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_ALL_ORIGINS = False
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://3000-shixen-ptnikke-j87jrjow51e.ws.codeinstitute-ide.net",
-    "http://localhost:3000",
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'https://3000-shixen-ptnikke-j87jrjow51e.ws.codeinstitute-ide.net',
+    'https://my-pt-api-242fe05c6a61.herokuapp.com',
 ]
 
 CORS_ALLOW_METHODS = [
