@@ -24,7 +24,7 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(required=True)
 
     def validate(self, data):
-        user = authenticate(username=data['username'], password=data['password'])
+        user = authenticate(username=data.get('username'), password=data.get('password'))
         if user is None:
             raise serializers.ValidationError("Invalid credentials")
         return data
