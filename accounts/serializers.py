@@ -27,8 +27,3 @@ class LoginSerializer(serializers.Serializer):
         if user is None:
             raise serializers.ValidationError("Invalid credentials")
         return data
-
-    def create(self, validated_data):
-        user = User.objects.get(username=validated_data['username'])
-        token, created = Token.objects.get_or_create(user=user)
-        return token.key
