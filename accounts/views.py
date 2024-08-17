@@ -15,23 +15,22 @@ class SignupViewSet(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin):
     permission_classes = [AllowAny]
 
 #using REST token to handle login 
-class CustomLoginView(ObtainAuthToken):
-    serializer_class = LoginSerializer
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = authenticate(username=serializer.validated_data['username'], password=serializer.validated_data['password'])
-        if user is None:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key}, status=status.HTTP_200_OK)
+class CustomLoginView(APIView):
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            username = serializer.validated_data['username']
+            password = serializer.validated_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return Response({'detail': 'Login successful'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'detail': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #REST token to handle logout
 class LogoutView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
     def post(self, request):
-        request.user.auth_token.delete()
-        return Response({'message': 'Successfully logged out'}, status=status.HTTP_200_OK)
+        logout(request)
+        return Response({'detail': 'Logout successful'}, status=status.HTTP_200_OK)
