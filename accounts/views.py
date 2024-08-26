@@ -14,27 +14,36 @@ class SignupViewSet(viewsets.GenericViewSet, viewsets.mixins.CreateModelMixin):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
-#using REST token to handle login 
+
 class CustomLoginView(APIView):
     def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        
-        if not username or not password:
-            return Response({'error': 'Username and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return Response({'status': 'User logged in'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            username = serializer.validated_data['username']
+            password = serializer.validated_data['password']
+            
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+
+                token, created = Token.objects.get_or_create(user=user)
+                
+                return Response({'token': token.key}, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #REST token to handle logout
 class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request):
-        if request.user.is_authenticated:
-            logout(request)
-            return Response({'status': 'User logged out'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'No user is logged in'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            token = Token.objects.get(user=request.user)
+            token.delete()
+        except Token.DoesNotExist:
+            pass
+        
+        logout(request)
+        return Response({'status': 'User logged out'}, status=status.HTTP_200_OK)
