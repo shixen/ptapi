@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from .serializers import UserSerializer, LoginSerializer
 
@@ -41,12 +42,13 @@ class CustomLoginView(APIView):
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @csrf_exempt
     def post(self, request):
         auth_header = request.headers.get('Authorization')
-        
-        if auth_header and auth_header.startswith('Token '):
-            token_key = auth_header.split(' ')[1]
+
+        if auth_header:
             try:
+                token_key = auth_header.split(' ')[1]
                 token = Token.objects.get(key=token_key)
                 token.delete()
                 logout(request)
