@@ -42,11 +42,11 @@ class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        token = request.headers.get('Authorization').split(' ')[1]
         try:
-            token = Token.objects.get(user=request.user)
-            token.delete()
+            token_obj = Token.objects.get(key=token)
+            token_obj.delete()
+            logout(request)
+            return Response({'status': 'User logged out'}, status=status.HTTP_200_OK)
         except Token.DoesNotExist:
-            pass
-        
-        logout(request)
-        return Response({'status': 'User logged out'}, status=status.HTTP_200_OK)
+            return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
