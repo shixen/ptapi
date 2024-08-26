@@ -43,10 +43,10 @@ class LogoutView(APIView):
 
     def post(self, request):
         auth_header = request.headers.get('Authorization')
-
-        if auth_header:
+        
+        if auth_header and auth_header.startswith('Token '):
+            token_key = auth_header.split(' ')[1]
             try:
-                token_key = auth_header.split(' ')[1]
                 token = Token.objects.get(key=token_key)
                 token.delete()
                 logout(request)
