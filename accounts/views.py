@@ -42,11 +42,16 @@ class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        token = request.headers.get('Authorization').split(' ')[1]
-        try:
-            token_obj = Token.objects.get(key=token)
-            token_obj.delete()
-            logout(request)
-            return Response({'status': 'User logged out'}, status=status.HTTP_200_OK)
-        except Token.DoesNotExist:
-            return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+        auth_header = request.headers.get('Authorization')
+
+        if auth_header:
+            try:
+                token_key = auth_header.split(' ')[1]
+                token = Token.objects.get(key=token_key)
+                token.delete()
+                logout(request)
+                return Response({'status': 'User logged out'}, status=status.HTTP_200_OK)
+            except Token.DoesNotExist:
+                return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error': 'Authentication credentials were not provided.'}, status=status.HTTP_403_FORBIDDEN)
