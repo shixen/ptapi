@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -41,16 +41,12 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://3000-shixen-ptnikke-j87jrjow51e.ws.codeinstitute-ide.net',
     'https://my-pt-api-242fe05c6a61.herokuapp.com',
+    'https://8000-shixen-ptapi-ewrsmddxgmb.ws.codeinstitute-ide.net',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'https://3000-shixen-ptnikke-j87jrjow51e.ws.codeinstitute-ide.net',
-    'https://my-pt-api-242fe05c6a61.herokuapp.com',
-]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -63,6 +59,13 @@ CORS_ALLOW_METHODS = [
     'PATCH',
     'DELETE',
     'OPTIONS',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.gitpod.io",
+    "https://*.herokuapp.com",
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
 ]
 
 # Application definition
