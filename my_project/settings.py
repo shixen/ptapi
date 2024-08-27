@@ -68,6 +68,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     "https://8000-shixen-ptapi-ewrsmddxgmb.ws.codeinstitute-ide.net",
     'https://3000-shixen-ptnikke-j87jrjow51e.ws.codeinstitute-ide.net',
+    'https://my-pt-api-242fe05c6a61.herokuapp.com',
 ]
 
 # Application definition
